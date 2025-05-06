@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaHome, FaBell, FaBook, FaChalkboardTeacher, FaTools, FaSignOutAlt } from 'react-icons/fa';
 import './Sidebar.css';
 
 function Sidebar({ open, toggle }) {
   return (
     <div className={`sidebar ${open ? 'sidebar-open' : ''}`}>
       <ul onClick={toggle}>
-        <li><Link to="/dashboard">Dashboard</Link></li>
-        <li><Link to="/booking">Book Room</Link></li>
-        <li><Link to="/timetable">Timetable</Link></li>
-        <li><Link to="/maintenance">Maintenance</Link></li>
-        <li><Link to="/notifications">Notifications</Link></li>
-        <li><Link to="/">Logout</Link></li>
+        <li><Link to="/dashboard"><FaHome /> Dashboard</Link></li>
+        <li><Link to="/booking"><FaBook /> Book Room</Link></li>
+        <li><Link to="/timetable"><FaChalkboardTeacher /> Timetable</Link></li>
+        <li><Link to="/maintenance"><FaTools /> Maintenance</Link></li>
+        <li><Link to="/notifications"><FaBell /> Notifications</Link></li>
+        <li><Link to="/"><FaSignOutAlt /> Logout</Link></li>
       </ul>
     </div>
   );
