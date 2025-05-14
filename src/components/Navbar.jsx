@@ -15,7 +15,7 @@ function Navbar() {
   return (
     <>
       <nav className="navbar">
-        <div className="navbar-logo">Smart Campus</div>
+        <div className="navbar-logo">Smart Campus Service Portal</div>
 
         {/* Desktop Nav Links */}
         <ul className="nav-links">
