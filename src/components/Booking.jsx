@@ -1,7 +1,23 @@
 import React, { useState } from 'react';
 import '../App.css';
+import React, { useState } from 'react';
+import '../App.css';
 
 const Booking = () => {
+  const [bookings, setBookings] = useState([]);
+  const [newBooking, setNewBooking] = useState({ type: 'study', room: '', date: '', time: '', module: '' });
+  const registeredModules = ['Mathematics', 'Physics', 'Computer Science']; // Example modules
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewBooking({ ...newBooking, [name]: value });
+  };
+
+  const handleBooking = () => {
+    setBookings([...bookings, newBooking]);
+    setNewBooking({ type: 'study', room: '', date: '', time: '', module: '' });
+  };
+
   const [bookings, setBookings] = useState([]);
   const [newBooking, setNewBooking] = useState({ type: 'study', room: '', date: '', time: '', module: '' });
   const registeredModules = ['Mathematics', 'Physics', 'Computer Science']; // Example modules
