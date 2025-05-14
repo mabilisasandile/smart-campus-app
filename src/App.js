@@ -10,6 +10,10 @@ import Dashboard from './components/Dashboard';
 import AdminPage from './pages/AdminPage';
 import StudentPage from './pages/StudentPage';
 import LecturerPage from './pages/LecturerPage';
+import SignUp from './components/SignUp';
+import PrivateRoute from './PrivateRoute';
+import Register from './components/Register';
+
 
 function App() {
   return (
@@ -18,6 +22,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/timetable" element={<Timetable />} />
         <Route path="/maintenance" element={<Maintenance />} />
