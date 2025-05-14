@@ -210,7 +210,8 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 300px;
+  width: 500px;
+  height: 300px;
   z-index: 1;
 }
 
@@ -218,7 +219,11 @@
   margin-bottom :15px;
   text-align: left;
 }
-
+.login-button{
+ background-color: #282c34;
+ border-radius: 2%; 
+ color: whitesmoke;
+}
 
 .form-group label {
 display: block;
@@ -230,5 +235,125 @@ margin-bottom: 5px;
 width: 100%;
 padding: 8px;
 box-sizing: border-box;
+}
+
+.booking-container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.booking-form select,
+.booking-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.booking-form button {
+  padding: 10px;
+  background-color: #282c34;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.booking-form button:hover {
+  background-color: #282c34;
+}
+
+.booking-list {
+  margin-top: 20px;
+}
+
+.booking-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.booking-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.chart-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.chart-container {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.chart-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.management-section {
+  margin-top: 40px;
+}
+
+.announcement-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.announcement-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.announcement-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.announcement-form button:hover {
+  background-color: #0056b3;
+}
+
+.announcement-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.announcement-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
