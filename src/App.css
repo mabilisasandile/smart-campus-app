@@ -211,7 +211,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 500px;
-  height: 300px;
+  height: 400px;
   z-index: 1;
 }
 
@@ -235,6 +235,12 @@ margin-bottom: 5px;
 
 
 .form-group input {
+width: 100%;
+padding: 8px;
+box-sizing: border-box;
+}
+
+.form-group select {
 width: 100%;
 padding: 8px;
 box-sizing: border-box;

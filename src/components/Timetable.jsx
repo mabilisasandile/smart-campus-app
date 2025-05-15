@@ -1,6 +1,4 @@
 import React from 'react';
-import '../App.css'; // Make sure to create this CSS file for styling
-import React from 'react';
 import '../App.css';
 
 const Timetable = () => {

@@ -1,68 +1,91 @@
-import { useState } from 'react';
-import '../App.css';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState, useContext } from "react";
+import "../App.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext"; // context import
 
 const Login = () => {
-  const [form, setForm] = useState({ username: '', password: '' });
-  const [error, setError] = useState('');
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Context usage
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simple validation
-    if (!form.username || !form.password) {
-      setError('Please enter both username and password.');
+    if (!form.email || !form.password) {
+      setError("Please enter both username and password.");
       return;
     }
 
     try {
-      const res = await axios.post('http://localhost:4000/api/user/login', form);
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('role', res.data.role);
+      const res = await axios.post(
+        "http://localhost:4000/api/user/login",
+        form
+      );
+      const data = res.data;
 
-      if (res.data.role === 'admin') {
-        navigate('/admin');
-      } else if (res.data.role === 'lecturer') {
-        navigate('/lecturer');
+      if (!data.success) {
+        setError(data.message || "Invalid username or password.");
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      login(data.role); // updates global auth state for Navbar, etc.
+
+      if (data.role === "admin") {
+        navigate("/admin");
+      } else if (data.role === "lecturer") {
+        navigate("/lecturer");
       } else {
-        navigate('/student');
+        navigate("/student");
       }
     } catch (err) {
-      // Handle API errors
-      setError('Invalid username or password.');
+      setError("Something went wrong. Please try again later.");
     }
   };
 
   return (
-  <div className="login-container">
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
+    <div className="login-container">
+      {[...Array(9)].map((_, i) => (
+        <div key={i} className="bubble"></div>
+      ))}
       <div className="login-card">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input type="text" value={form.username} onChange={e => setForm({ ...form, username: e.target.value })} id="username" name="username" required />
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              id="email"
+              name="email"
+              required
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input type="password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} id="password" name="password" required />
+            <input
+              type="password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              id="password"
+              name="password"
+              required
+            />
           </div>
-          <button type="submit" className="login-button">Login</button>
+          <br />
+          <button type="submit" className="login-button">
+            Login
+          </button>
         </form>
+        <br />
         <div className="links">
-          <a href="/forgot-password">Forgot Password?</a>
-          <a href="/register">Register</a>
+          <a href="/forgot-password">Forgot Password?</a> <br />
+          <a href="/signup">Register</a>
         </div>
       </div>
     </div>
