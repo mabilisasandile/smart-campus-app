@@ -7,7 +7,7 @@ import './Navbar.css';
 
 function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout, role } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -24,7 +24,19 @@ function Navbar() {
       <nav className="navbar">
         <div className="navbar-logo">Smart Campus Service Portal</div>
         <ul className="nav-links">
-          <li><Link to="/dashboard">Dashboard</Link></li>
+          {role === 'admin' ? (
+            <li>
+              <li><Link to="/dashboard">Dashboard</Link></li>
+            </li>
+          ) : role === 'lecturer' ? (
+            <li>
+              <Link to="/lecturer">Dashboard</Link>
+            </li>
+          ) : (
+            <li>
+              <Link to="/student">Dashboard</Link>
+            </li>
+          )}  
           <li><Link to="/booking">Booking</Link></li>
           <li><Link to="/timetable">Timetable</Link></li>
           <li><Link to="/maintenance">Maintenance</Link></li>

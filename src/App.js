@@ -14,6 +14,8 @@ import SignUp from "./components/SignUp";
 import PrivateRoute from "./components/PrivateRoute";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
 import Register from "./components/Register";
+import TimetableAdminForm from "./components/TimetableAdminForm";
+
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="/maintenance" element={<Maintenance />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
+
+        {/* Private Routes */}
         <Route
           path="/admin"
           element={
@@ -59,7 +63,23 @@ function App() {
               <Dashboard />
             </PrivateRoute>
           }
-          />
+        />
+        <Route
+          path="/timetable-management"
+          element={
+            <PrivateRoute expectedRoles={["admin", "lecturer"]}>
+              <TimetableAdminForm />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PrivateRoute expectedRoles={["admin"]}>
+              <Register />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   );

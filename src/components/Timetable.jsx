@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import TimetableAdminForm from './TimetableAdminForm';
 import '../App.css';
 
 const Timetable = () => {
-  const timetableData = [
-    { day: 'Monday', classes: ['DTD'] },
-    { day: 'Tuesday', classes: ['HMD'] },
-    { day: 'Wednesday', classes: ['Math'] },
-    { day: 'Thursday', classes: ['DSO17BT'] },
-    { day: 'Friday', classes: ['SFG'] },
-  ];
+  const [timetableData, setTimetableData] = useState([]);
+
+  useEffect(() => {
+    try {
+      const fetchTimetable = async () => {
+        const res = await axios.get('http://localhost:4000/api/timetable/fetchtimetable');
+        setTimetableData(res.data);
+      };
+
+      fetchTimetable();
+    } catch (error) {
+      console.error('Error fetching timetable:', error);
+    }
+    
+  }, []);
 
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const currentMonth = new Date().getMonth();
@@ -26,12 +36,8 @@ const Timetable = () => {
   const daysInMonth = getDaysInMonth(currentMonth, currentYear);
 
   const calendarDays = [];
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    calendarDays.push('');
-  }
-  for (let i = 1; i <= daysInMonth; i++) {
-    calendarDays.push(i);
-  }
+  for (let i = 0; i < firstDayOfMonth; i++) calendarDays.push('');
+  for (let i = 1; i <= daysInMonth; i++) calendarDays.push(i);
 
   const getClassForDay = (day) => {
     const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
@@ -41,7 +47,8 @@ const Timetable = () => {
 
   return (
     <div className="timetable-calendar-container">
-      <div className="timetable-card">
+      {timetableData.length > 0 ? (
+        <div className="timetable-card">
         <h2>Weekly Timetable</h2>
         <table className="timetable">
           <thead>
@@ -60,7 +67,12 @@ const Timetable = () => {
           </tbody>
         </table>
       </div>
-
+      ) : (
+        <div className="timetable-card">
+          <h2>No Timetable Entries Found</h2>
+        </div>
+      )}
+      
       <div className="calendar-card">
         <h2>Calendar - {monthNames[currentMonth]} {currentYear}</h2>
         <table className="calendar">
@@ -87,6 +99,6 @@ const Timetable = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Timetable;
