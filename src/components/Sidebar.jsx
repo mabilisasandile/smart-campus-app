@@ -40,11 +40,6 @@ function Sidebar({ open, toggle }) {
           </Link>
         </li>
         <li>
-          <Link to="/maintenance">
-            <FaTools /> Maintenance
-          </Link>
-        </li>
-        <li>
           <Link to="/notifications">
             <FaBell /> Notifications
           </Link>

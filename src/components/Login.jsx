@@ -32,7 +32,11 @@ const Login = () => {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
-      login(data.role); // updates global auth state for Navbar, etc.
+      login(data.role, data.userId, data.name, data.email); // updates global auth state for Navbar, etc.
+      console.log("User Data: ", data.userId);
+      console.log("User Name: ", data.name);
+      console.log("User Role: ", data.role);
+      console.log("User Email: ", data.email);
 
       if (data.role === "admin") {
         navigate("/admin");

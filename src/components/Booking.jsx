@@ -1,35 +1,92 @@
-import React, { useState } from 'react';
-import '../App.css';
+import React, { useState, useEffect } from "react";
+import "../App.css";
+import { AuthContext } from "./AuthContext";
 
 const Booking = () => {
-
+  const { userId } = React.useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
-  const [newBooking, setNewBooking] = useState({ type: 'study', room: '', date: '', time: '', module: '' });
-  const registeredModules = ['Mathematics', 'Physics', 'Computer Science']; // Example modules
+  const [newBooking, setNewBooking] = useState({
+    userId: userId,
+    type: "study",
+    room: "",
+    date: "",
+    time: "",
+    endTime: "",
+    module: "",
+  });
+  
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/booking/fetchbookings");
+        const data = await response.json();
+        setBookings(data);
+        console.log("Bookings fetched", data);
+        console.log("userId: ", userId);
+      } catch (error) {
+        console.error("Error fetching bookings", error);
+      }
+    };
+    fetchBookings();
+  }, []);
+
+  const registeredModules = ["Mathematics", "Physics", "DTD117V", "SFG117V", "HMD117V"]; // Example modules
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewBooking({ ...newBooking, [name]: value });
   };
 
-  const handleBooking = () => {
-    setBookings([...bookings, newBooking]);
-    setNewBooking({ type: 'study', room: '', date: '', time: '', module: '' });
+  const handleBooking = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/booking/createbooking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newBooking),
+      });
+
+      const savedBooking = await response.json();
+      setBookings([...bookings, savedBooking]);
+      setNewBooking({
+        userId: userId,
+        type: "study",
+        room: "",
+        date: "",
+        time: "",
+        endTime: "",
+        module: "",
+      });
+      alert("Booking successful");
+      console.log("Booking created", savedBooking);
+    } catch (error) {
+      console.error("Booking failed", error);
+      alert("Booking failed");
+    }
   };
 
   return (
     <div className="booking-container">
       <h2>Booking</h2>
       <div className="booking-form">
-        <select name="type" value={newBooking.type} onChange={handleInputChange}>
+        <select
+          name="type"
+          value={newBooking.type}
+          onChange={handleInputChange}
+        >
           <option value="study">Study Room</option>
           <option value="appointment">Appointment with Lecturer</option>
         </select>
-        {newBooking.type === 'appointment' && (
-          <select name="module" value={newBooking.module} onChange={handleInputChange}>
+        {newBooking.type === "appointment" && (
+          <select
+            name="module"
+            value={newBooking.module}
+            onChange={handleInputChange}
+          >
             <option value="">Select Module</option>
             {registeredModules.map((module, index) => (
-              <option key={index} value={module}>{module}</option>
+              <option key={index} value={module}>
+                {module}
+              </option>
             ))}
           </select>
         )}
@@ -52,6 +109,12 @@ const Booking = () => {
           value={newBooking.time}
           onChange={handleInputChange}
         />
+        <input
+          type="time"
+          name="endTime"
+          value={newBooking.endTime}
+          onChange={handleInputChange}
+        />
         <button onClick={handleBooking}>Book</button>
       </div>
       <div className="booking-list">
@@ -59,7 +122,10 @@ const Booking = () => {
         <ul>
           {bookings.map((booking, index) => (
             <li key={index}>
-              {booking.type === 'study' ? 'Study Room' : `Appointment (${booking.module})`} - {booking.room} - {booking.date} at {booking.time}
+              {booking.type === "study"
+                ? "Study Room"
+                : `Appointment (${booking.module})`}{" "}
+              - {booking.room} - {booking.date} at {booking.time} to {booking.endTime}
             </li>
           ))}
         </ul>

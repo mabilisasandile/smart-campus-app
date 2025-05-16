@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import TimetableAdminForm from './TimetableAdminForm';
 import '../App.css';
 
 const Timetable = () => {
@@ -69,7 +68,7 @@ const Timetable = () => {
       </div>
       ) : (
         <div className="timetable-card">
-          <h2>No Timetable Entries Found</h2>
+          <h2>Searching Timetable...</h2>
         </div>
       )}
       

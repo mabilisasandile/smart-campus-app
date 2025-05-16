@@ -39,7 +39,6 @@ function Navbar() {
           )}  
           <li><Link to="/booking">Booking</Link></li>
           <li><Link to="/timetable">Timetable</Link></li>
-          <li><Link to="/maintenance">Maintenance</Link></li>
           <li><Link to="/notifications">Notifications</Link></li>
           {isLoggedIn ? (
             <li onClick={handleLogout}><Link>Logout</Link></li>
