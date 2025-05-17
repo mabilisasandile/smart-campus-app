@@ -10,7 +10,7 @@ const TimetableAdminForm = () => {
     e.preventDefault();
     const classList = classes.split(',').map(c => c.trim());
     try {
-      const res = await axios.post('http://localhost:4000/api/timetable/createtimetable', { day, classes: classList });
+      const res = await axios.post('https://smart-campus-backend-service.onrender.com/api/timetable/createtimetable', { day, classes: classList });
       setDay('');
       setClasses('');
       alert('Timetable entry added successfully!');

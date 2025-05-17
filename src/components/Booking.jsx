@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { AuthContext } from "./AuthContext";
 
+
+
 const Booking = () => {
   const { userId } = React.useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
@@ -18,7 +20,7 @@ const Booking = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/booking/fetchbookings");
+        const response = await fetch("https://smart-campus-backend-service.onrender.com/api/booking/fetchbookings");
         const data = await response.json();
         setBookings(data);
         console.log("Bookings fetched", data);
@@ -39,7 +41,7 @@ const Booking = () => {
 
   const handleBooking = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/booking/createbooking", {
+      const response = await fetch("https://smart-campus-backend-service.onrender.com/api/booking/createbooking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newBooking),

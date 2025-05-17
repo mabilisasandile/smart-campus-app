@@ -8,7 +8,7 @@ const Timetable = () => {
   useEffect(() => {
     try {
       const fetchTimetable = async () => {
-        const res = await axios.get('http://localhost:4000/api/timetable/fetchtimetable');
+        const res = await axios.get('https://smart-campus-backend-service.onrender.com/api/timetable/fetchtimetable');
         setTimetableData(res.data);
       };
 

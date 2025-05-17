@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import '../App.css';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -27,30 +28,57 @@ ChartJS.register(
   Legend
 );
 
-
 const Dashboard = () => {
   const [systemUsage, setSystemUsage] = useState([]);
   const [bookingStats, setBookingStats] = useState([]);
   const [maintenanceRequests, setMaintenanceRequests] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const [newAnnouncement, setNewAnnouncement] = useState('');
+  const [adminName, setAdminName] = useState('Admin');
+  const [adminEmail, setAdminEmail] = useState('admin@gmail.com');
 
   useEffect(() => {
-    // Fetch data from API or database
-    // Example data
+    // Example chart data
     setSystemUsage([10, 20, 30, 40, 50]);
     setBookingStats([5, 15, 25, 35, 45]);
     setMaintenanceRequests([2, 4, 6, 8, 10]);
-    setAnnouncements(['Welcome to the new semester!', 'Maintenance work on Friday']);
+
+    // Fetch announcements (notifications)
+    fetchAnnouncements();
   }, []);
+
+  const fetchAnnouncements = async () => {
+    try {
+      const res = await axios.get('https://smart-campus-backend-service.onrender.com/api/notification/fetchnotifications');
+      setAnnouncements(res.data);
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  };
 
   const handleAnnouncementChange = (e) => {
     setNewAnnouncement(e.target.value);
   };
 
-  const postAnnouncement = () => {
-    setAnnouncements([...announcements, newAnnouncement]);
-    setNewAnnouncement('');
+  const postAnnouncement = async () => {
+    if (!newAnnouncement.trim()) return;
+
+    try {
+      await axios.post('https://smart-campus-backend-service.onrender.com/api/notification/createnotification', {
+        message: newAnnouncement,
+        postedBy: {
+          name: adminName,
+          email: adminEmail
+        }
+      });
+
+      alert('Announcement posted successfully!');
+      setNewAnnouncement('');
+      fetchAnnouncements(); // refresh the list
+    } catch (error) {
+      console.error('Error posting announcement:', error);
+      alert('Failed to post announcement. Please try again.');
+    }
   };
 
   const systemUsageData = {
@@ -89,7 +117,19 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <h2>Admin Dashboard</h2>
+
       <div className="management-section">
+        <ul>
+          <li>
+            <Link to="/register">User Management</Link>
+          </li>
+          <li>
+            <Link to="/notifications">Notifications</Link>
+          </li>
+          <li>
+            <Link to="/timetable-management">Timetable Management</Link>
+          </li>
+        </ul>
         <h3>Manage Announcements</h3>
         <div className="announcement-form">
           <input
@@ -101,11 +141,19 @@ const Dashboard = () => {
           <button onClick={postAnnouncement}>Post</button>
         </div>
         <ul className="announcement-list">
-          {announcements.map((announcement, index) => (
-            <li key={index}>{announcement}</li>
-          ))}
+          {announcements.length > 0 ? (
+            announcements.map((announcement, index) => (
+              <li key={index}>
+                <strong>{announcement.postedBy.name}:</strong> {announcement.message} <br />
+                <small>{new Date(announcement.createdAt).toLocaleString()}</small>
+              </li>
+            ))
+          ) : (
+            <li>No announcements available.</li>
+          )}
         </ul>
       </div>
+
       <div className="chart-section">
         <div className="chart-container">
           <h3>System Usage</h3>

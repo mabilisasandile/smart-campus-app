@@ -13,7 +13,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/api/user/register", form);
+      await axios.post("https://smart-campus-backend-service.onrender.com/api/user/register", form);
       alert("User Registered");
       setForm({
         name: "",

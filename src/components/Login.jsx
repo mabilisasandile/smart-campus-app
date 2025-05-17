@@ -20,7 +20,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/user/login",
+        "https://smart-campus-backend-service.onrender.com/api/user/login",
         form
       );
       const data = res.data;

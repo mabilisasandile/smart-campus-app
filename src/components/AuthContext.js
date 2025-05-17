@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 
+// https://smart-campus-backend-service.onrender.com
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
