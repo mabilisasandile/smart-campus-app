@@ -11,6 +11,7 @@ const TimetableAdminForm = () => {
     const classList = classes.split(',').map(c => c.trim());
     try {
       const res = await axios.post('http://localhost:4000/api/timetable/createtimetable', { day, classes: classList });
+      console.log(res.json());
       setDay('');
       setClasses('');
       alert('Timetable entry added successfully!');
