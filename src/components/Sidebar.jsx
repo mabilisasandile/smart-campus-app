@@ -5,7 +5,6 @@ import {
   FaBell,
   FaBook,
   FaChalkboardTeacher,
-  FaTools,
   FaSignOutAlt,
 } from "react-icons/fa";
 import "./Sidebar.css";
