@@ -22,7 +22,7 @@ const Booking = () => {
         const data = await response.json();
         setBookings(data);
         console.log("Bookings fetched", data);
-        console.log("userId: ", userId);
+        
       } catch (error) {
         console.error("Error fetching bookings", error);
       }
