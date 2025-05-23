@@ -37,7 +37,7 @@ const Booking = () => {
       }
     };
     fetchBookings();
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   const registeredModules = ["Mathematics", "Physics", "DTD117V", "SFG117V", "HMD117V"]; // Example modules
 

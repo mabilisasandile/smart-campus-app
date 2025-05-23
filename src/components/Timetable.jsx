@@ -28,7 +28,7 @@ const Timetable = () => {
       console.error('Error fetching timetable:', error);
     }
     
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const currentMonth = new Date().getMonth();

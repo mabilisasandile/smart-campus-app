@@ -24,7 +24,7 @@ const Notifications = () => {
       )
       .then((res) => setNotifications(res.data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [isLoggedIn, navigate]);
 
 
   const handleAnnouncementChange = (e) => {
