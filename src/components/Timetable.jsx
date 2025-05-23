@@ -1,11 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import '../App.css';
+import { AuthContext } from "./AuthContext";
 
 const Timetable = () => {
   const [timetableData, setTimetableData] = useState([]);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+
+    // Check if the user is logged in
+    if (!isLoggedIn) {
+      navigate("/unauthorized");
+    }
+
+    // Fetch timetable data from the backend
     try {
       const fetchTimetable = async () => {
         const res = await axios.get('https://smart-campus-backend-service.onrender.com/api/timetable/fetchtimetable');

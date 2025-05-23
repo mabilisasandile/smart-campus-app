@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from './AuthContext';
 import '../App.css';
+import { Link } from 'react-router-dom';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
 import {
@@ -34,8 +36,8 @@ const Dashboard = () => {
   const [maintenanceRequests, setMaintenanceRequests] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const [newAnnouncement, setNewAnnouncement] = useState('');
-  const [adminName, setAdminName] = useState('Admin');
-  const [adminEmail, setAdminEmail] = useState('admin@gmail.com');
+
+  const {userName, userEmail} = useContext(AuthContext);
 
   useEffect(() => {
     // Example chart data
@@ -67,8 +69,8 @@ const Dashboard = () => {
       await axios.post('https://smart-campus-backend-service.onrender.com/api/notification/createnotification', {
         message: newAnnouncement,
         postedBy: {
-          name: adminName,
-          email: adminEmail
+          name: userName,
+          email: userEmail
         }
       });
 

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 import { AuthContext } from "./AuthContext";
 
 
-
 const Booking = () => {
-  const { userId } = React.useContext(AuthContext);
+  const { isLoggedIn, userId } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const [newBooking, setNewBooking] = useState({
     userId: userId,
@@ -16,8 +16,15 @@ const Booking = () => {
     endTime: "",
     module: "",
   });
+  const navigate = useNavigate();
   
   useEffect(() => {
+    // Check if the user is logged in
+    if (!isLoggedIn) {
+      navigate("/unauthorized");
+    }
+
+    // Fetch bookings from the backend
     const fetchBookings = async () => {
       try {
         const response = await fetch("https://smart-campus-backend-service.onrender.com/api/booking/fetchbookings");
